@@ -12,8 +12,11 @@ echo "Starting SSH server on port 2222..."
 cd /root/project
 
 # Start OpenCode web server first (primary service)
-echo "Starting OpenCode web server on port 4096..."
-opencode --hostname 0.0.0.0 --port 4096 web &
+echo "Starting OpenCode web server on port 2046..."
+# Kill any existing opencode processes
+pkill -f opencode || true
+rm -rf ~/.opencode/data/ ~/.opencode/cache/ 2>/dev/null
+opencode --hostname 0.0.0.0 --port 2046 web &
 OPENCODE_PID=$!
 
 # Wait for OpenCode to initialize

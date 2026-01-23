@@ -28,11 +28,11 @@
 ## 端口映射
 
  | 端口 | 服务 | 说明 |
- |------|------|------|
- | 4096  | OpenCode | OpenCode Web 服务器 |
- | 3927  | Vibe-Kanban | Vibe-Kanban Web 界面 |
- | 2026  | 保留 | 用于用户自定义服务 |
- | 2222  | SSH | SSH 服务器，用于远程访问 |
+|------|---------|-------------|
+| 2046  | OpenCode | OpenCode Web 服务器 |
+| 3927  | Vibe-Kanban | Vibe-Kanban Web 界面 |
+| 2026  | 保留 | 用于用户自定义服务 |
+| 2222  | SSH | SSH 服务器，用于远程访问 |
 
 ## 目录映射
 
@@ -73,7 +73,7 @@ docker compose up -d
 ### 使用 Docker 直接运行
 
 ```bash
-docker build -t opencode-vibe:latest .
+docker build -t successage/opencode-vibe-kanban-docker:latest .
 docker run -d \
   --name opencode-vibe \
   --privileged \
@@ -85,7 +85,7 @@ docker run -d \
   -v $(pwd)/vibe-kanban:/var/tmp/vibe-kanban \
   -v $(pwd)/app:/app \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  opencode-vibe:latest
+  successage/opencode-vibe-kanban-docker:latest
 ```
 
 ## 使用说明

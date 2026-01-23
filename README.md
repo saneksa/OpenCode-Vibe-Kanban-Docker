@@ -29,10 +29,10 @@ The following plugins are installed and can be used in OpenCode:
 
  | Port | Service | Description |
 |------|---------|-------------|
- | 4096  | OpenCode | OpenCode Web server |
- | 3927  | Vibe-Kanban | Vibe-Kanban Web interface |
- | 2026  | Reserved | For user custom services |
- | 2222  | SSH | SSH server for remote access |
+ | 2046  | OpenCode | OpenCode Web server |
+| 3927  | Vibe-Kanban | Vibe-Kanban Web interface |
+| 2026  | Reserved | For user custom services |
+| 2222  | SSH | SSH server for remote access |
 
 ## Volume Mappings
 
@@ -73,7 +73,7 @@ docker compose up -d
 ### Running with Docker Directly
 
 ```bash
-docker build -t opencode-vibe:latest .
+docker build -t successage/opencode-vibe-kanban-docker:latest .
 docker run -d \
   --name opencode-vibe \
   --privileged \
@@ -85,7 +85,7 @@ docker run -d \
   -v $(pwd)/vibe-kanban:/var/tmp/vibe-kanban \
   -v $(pwd)/app:/app \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  opencode-vibe:latest
+  successage/opencode-vibe-kanban-docker:latest
 ```
 
 ## Usage

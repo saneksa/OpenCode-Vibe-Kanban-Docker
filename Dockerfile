@@ -39,7 +39,6 @@ RUN install -m 0755 -d /etc/apt/keyrings \
     && apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
     && rm -rf /var/lib/apt/lists/*
 
-# Install OpenCode
 RUN curl -fsSL https://opencode.ai/install | bash
 ENV PATH="/root/.opencode/bin:${PATH}"
 
@@ -74,11 +73,11 @@ COPY start.sh /root/start.sh
 RUN chmod +x /root/start.sh
 
 # Expose ports
-# 4096: OpenCode web server
+# 2046: OpenCode web server
 # 3927: vibe-kanban
-# 2026: User service (reserved)
+# 4096: Legacy OpenCode port (can be remapped if needed)
 # 2222: SSH server
-EXPOSE 4096 3927 2026 2222
+EXPOSE 2046 3927 4096 2222
 
 # Set default working directory
 WORKDIR /root/project
