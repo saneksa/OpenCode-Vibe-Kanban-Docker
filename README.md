@@ -31,8 +31,8 @@ The following plugins are installed and can be used in OpenCode:
 |------|---------|-------------|
  | 2046  | OpenCode | OpenCode Web server |
 | 3927  | Vibe-Kanban | Vibe-Kanban Web interface |
-| 2026  | Reserved | For user custom services |
-| 2222  | SSH | SSH server for remote access |
+| 2027  | Reserved | For user custom services |
+| 2211  | SSH | SSH server for remote access |
 
 ## Volume Mappings
 
@@ -79,8 +79,8 @@ docker run -d \
   --privileged \
   -p 4096:4096 \
   -p 3927:3927 \
-  -p 2026:2026 \
-  -p 2222:2222 \
+  -p 2027:2027 \
+  -p 2211:2211 \
   -v $(pwd)/project:/root/project \
   -v $(pwd)/vibe-kanban:/var/tmp/vibe-kanban \
   -v $(pwd)/app:/app \
@@ -111,16 +111,16 @@ The Vibe-Kanban server starts automatically when the container starts, listening
 
 ### SSH Access
 
-The SSH server starts automatically when the container starts, listening on port 2222.
+The SSH server starts automatically when the container starts, listening on port 2211.
 
 **Connection details:**
 - Host: localhost (or your server IP)
-- Port: 2222
+- Port: 2211
 - Username: root
 - Password: pwd4root
 
 ```bash
-ssh -p 2222 root@localhost
+ssh -p 2211 root@localhost
 ```
 
 ### Docker-in-Docker
@@ -142,15 +142,15 @@ Both `docker compose` and `docker-compose` commands are available.
 
 ### Custom Services
 
-Port 2026 is reserved for users to start their own services. For example:
+Port 2027 is reserved for users to start their own services. For example:
 
 ```bash
 docker exec -it opencode-vibe bash
 cd /root/project
-python -m http.server 2026
+python -m http.server 2027
 ```
 
-Then access your service at http://localhost:2026.
+Then access your service at http://localhost:2027.
 
 ## Stopping Services
 
@@ -229,7 +229,7 @@ Software components included in this image follow their respective licenses:
 
 ## Notes
 
-1. **Port conflicts**: Default ports 4096, 3927, 2026, and 2222 may be occupied by other services. Please ensure these ports are available or modify the port mappings.
+1. **Port conflicts**: Default ports 4096, 3927, 2027, and 2211 may be occupied by other services. Please ensure these ports are available or modify the port mappings.
 2. **Data persistence**: All data is saved to the host via volume mappings. Deleting the container will not lose data.
 3. **Security**: By default, the OpenCode server has no password set. In production, please set the `OPENCODE_SERVER_PASSWORD` environment variable.
 4. **SSH security**: The default SSH password (pwd4root) should be changed in production environments. You can modify it by rebuilding the image with a custom configuration.
@@ -241,7 +241,7 @@ Software components included in this image follow their respective licenses:
 ### v2.0.0 (2026-01-23)
 
 - Add Docker engine with Docker-in-Docker support
-- Add SSH server for remote access (port 2222, root/pwd4root)
+- Add SSH server for remote access (port 2211, root/pwd4root)
 - Configure Docker for container environment (fuse-overlayfs, custom network)
 - Add Docker init script for service management
 - Update docker-compose.yml with privileged mode and Docker socket mount
@@ -255,5 +255,5 @@ Software components included in this image follow their respective licenses:
 - Install Vibe-Kanban
 - Pre-install 5 OpenCode plugins (oh-my-opencode, superpowers, playwright-mcp, agent-browser, chrome-devtools-mcp)
 - Configure dual service startup scripts
-- Port mappings: 4096 (OpenCode), 3927 (Vibe-Kanban), 2026 (custom)
+- Port mappings: 4096 (OpenCode), 3927 (Vibe-Kanban), 2027 (custom)
 - Volume mapping support for project persistence

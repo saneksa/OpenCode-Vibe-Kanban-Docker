@@ -61,10 +61,7 @@ RUN chmod +x /etc/init.d/docker
 RUN mkdir -p /var/run/sshd \
     && echo 'root:pwd4root' | chpasswd \
     && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config \
-    && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config \
-    && echo 'Port 2222' >> /etc/ssh/sshd_config
-
-COPY clean-ssh-config /etc/ssh/sshd_config
+    && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
 COPY clean-ssh-config /etc/ssh/sshd_config
 
@@ -75,9 +72,10 @@ RUN chmod +x /root/start.sh
 # Expose ports
 # 2046: OpenCode web server
 # 3927: vibe-kanban
+# 2027: User service (reserved)
 # 4096: Legacy OpenCode port (can be remapped if needed)
-# 2222: SSH server
-EXPOSE 2046 3927 4096 2222
+# 2211: SSH server
+EXPOSE 2046 3927 2027 4096 2211
 
 # Set default working directory
 WORKDIR /root/project

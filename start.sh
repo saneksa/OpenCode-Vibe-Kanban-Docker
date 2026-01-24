@@ -3,7 +3,7 @@
 echo "Starting Docker daemon..."
 service docker start
 
-echo "Starting SSH server on port 2222..."
+echo "Starting SSH server on port 2211..."
 
 # Start SSH daemon
 /usr/sbin/sshd

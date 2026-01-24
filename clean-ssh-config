@@ -1,24 +1,8 @@
-# Minimal SSH configuration - Only essential settings
-
-# Port
-Port 2222
-
-# Listen address
-ListenAddress 127.0.0.1
-
-# Authentication
+# Minimal SSH configuration
+Port 2211
 PermitRootLogin yes
 PasswordAuthentication yes
-
-# Logging
-SyslogFacility AUTH
-LogLevel INFO
-
-# Disable PAM (use simple auth directly)
-UsePAM no
-
-# Allow users
-AllowUsers root
-
-# Disable sftp subsystem
+ChallengeResponseAuthentication yes
+UsePAM yes
+PermitEmptyPasswords no
 Subsystem sftp /usr/lib/openssh/sftp-server
