@@ -14,8 +14,8 @@ NC='\033[0m'
 # Temporary container name
 TEMP_CONTAINER="opencode-init-tmp"
 
-# Get the actual image name from docker compose
-IMAGE_NAME=$(docker compose images -q 2>/dev/null | head -1)
+# Fixed image name
+IMAGE_NAME="successage/opencode-kanban"
 
 # Host directories
 HOST_USERDATA_DIR="./userdata"
@@ -56,19 +56,43 @@ fi
 
 # Build or verify image exists
 echo -e "${GREEN}Checking Docker image...${NC}"
-IMAGE_NAME=$(docker compose images -q 2>/dev/null | head -1)
 
-if [ -z "$IMAGE_NAME" ]; then
-    echo "  Image not found. Building from Dockerfile..."
-    docker compose build
+if docker image inspect "$IMAGE_NAME" &>/dev/null; then
+    echo "  Image exists: $IMAGE_NAME"
+    echo ""
+    echo -e "${YELLOW}Do you want to rebuild the image?${NC}"
+    echo -e "${YELLOW}Press 'y' within 5 seconds to rebuild, or any other key to skip...${NC}"
+
+    read -t 5 -n 1 -r REPLY 2>/dev/null || REPLY=""
+    echo ""
+
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo "Rebuilding image..."
+        if [ -f "./build-image.sh" ]; then
+            ./build-image.sh
+        else
+            docker build -t "$IMAGE_NAME" .
+        fi
+        if [ $? -ne 0 ]; then
+            echo -e "${RED}Error: Failed to build image.${NC}"
+            exit 1
+        fi
+        echo "  Image rebuilt successfully."
+    else
+        echo "  Using existing image (timeout or skipped)."
+    fi
+else
+    echo "  Image not found. Building..."
+    if [ -f "./build-image.sh" ]; then
+        ./build-image.sh
+    else
+        docker build -t "$IMAGE_NAME" .
+    fi
     if [ $? -ne 0 ]; then
         echo -e "${RED}Error: Failed to build image.${NC}"
         exit 1
     fi
-    IMAGE_NAME=$(docker compose images -q 2>/dev/null | head -1)
-    echo "  Image built successfully. Image ID: $IMAGE_NAME"
-else
-    echo "  Image found: $IMAGE_NAME"
+    echo "  Image built successfully."
 fi
 echo ""
 

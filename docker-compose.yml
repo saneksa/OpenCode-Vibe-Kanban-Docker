@@ -1,8 +1,6 @@
 services:
   opencode:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: successage/opencode-kanban
     container_name: opencode-vibe
     ports:
       - "2046:2046"
