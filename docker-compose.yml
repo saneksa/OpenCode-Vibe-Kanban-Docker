@@ -1,6 +1,6 @@
 services:
   opencode:
-    image: opencode-vibe-kanban:test
+    image: successage/opencode-kanban
     container_name: opencode-vibe
     ports:
       - "2046:2046"
