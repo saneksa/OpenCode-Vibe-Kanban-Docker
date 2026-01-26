@@ -20,12 +20,17 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     openssh-server \
     fuse-overlayfs \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js 20 LTS via NodeSource repository
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Bun for oh-my-opencode
+RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/root/.bun/bin:${PATH}"
 
 # Install Golang (latest stable)
 RUN curl -fsSL https://go.dev/dl/go1.21.6.linux-amd64.tar.gz -o /tmp/go.tar.gz \
@@ -63,7 +68,13 @@ RUN install -m 0755 -d /etc/apt/keyrings \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -fsSL https://opencode.ai/install | bash
-ENV PATH="/root/.opencode/bin:/root/miniconda3/bin:/usr/local/go/bin:/root/.cargo/bin:${PATH}"
+ENV PATH="/root/.opencode/bin:/root/.bun/bin:/root/miniconda3/bin:/usr/local/go/bin:/root/.cargo/bin:${PATH}"
+
+# Install Bun for oh-my-opencode
+RUN curl -fsSL https://bun.sh/install | bash
+
+# Install oh-my-opencode (non-interactive mode for Docker)
+RUN bunx oh-my-opencode install --no-tui --claude=no --gemini=no --copilot=no --openai=no --opencode-zen=no --zai-coding-plan=no
 
 # Install vibe-kanban
 RUN npm install -g vibe-kanban@latest
