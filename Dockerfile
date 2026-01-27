@@ -77,13 +77,13 @@ RUN curl -fsSL https://bun.sh/install | bash
 RUN bunx oh-my-opencode install --no-tui --claude=no --gemini=no --copilot=no --openai=no --opencode-zen=no --zai-coding-plan=no
 
 # Install vibe-kanban
-RUN npm install -g vibe-kanban@latest
+#RUN npm install -g vibe-kanban@latest
 
 # Create project directory
 RUN mkdir -p /root/project
 
 # Create vibe-kanban directory
-RUN mkdir -p /var/tmp/vibe-kanban
+#RUN mkdir -p /var/tmp/vibe-kanban
 
 RUN mkdir -p /app/docker-data
 

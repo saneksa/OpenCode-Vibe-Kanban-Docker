@@ -16,6 +16,7 @@ services:
       - ./userdata/.config/openspec:/root/.config/openspec
       - ./userdata/.config/vibe-kanban:/root/.local/share/vibe-kanban
       - ./userdata/.vibe-kanban:/root/.vibe-kanban
+      - ./userdata/.local/share/opencode:/root/.local/share/opencode
     privileged: true
     stdin_open: true
     tty: true
