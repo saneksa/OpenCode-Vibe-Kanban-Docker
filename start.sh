@@ -18,9 +18,7 @@ pkill -f opencode || true
 rm -rf ~/.opencode/data/ ~/.opencode/cache/ 2>/dev/null
 # Disable Bun installation in oh-my-opencode
 export OHMYOPENCODE_DISABLE_BUN=1
-export OPENCODE_SERVER_USERNAME=root
-export OPENCODE_SERVER_PASSWORD=pwd4root
-opencode --hostname 0.0.0.0 --port 2046 web &
+OPENCODE_SERVER_USERNAME=root OPENCODE_SERVER_PASSWORD=pwd4root opencode --hostname 0.0.0.0 --port 2046 web &
 OPENCODE_PID=$!
 
 # Wait for OpenCode to initialize
