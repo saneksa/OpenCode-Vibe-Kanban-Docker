@@ -43,8 +43,8 @@ TCPKeepAlive yes
 ClientAliveInterval 300
 ClientAliveCountMax 3
 
-# Disable forwardings
-AllowTcpForwarding no
+# Enable TCP forwarding for VSCode SSH
+AllowTcpForwarding yes
 AllowAgentForwarding no
 PermitTunnel no
 X11Forwarding no
