@@ -1,6 +1,6 @@
 # OpenCode + Vibe-Kanban Docker Image
 
-[简体中文](README.zh-CN.md) | English
+[简体中文](README.zh-CN.md) | English | [Русский](README.ru.md)
 
 Docker image based on Ubuntu 24.04 LTS, pre-installed with OpenCode and Vibe-Kanban, along with related OpenCode plugins.
 
@@ -138,13 +138,19 @@ Configuration persists across container restarts. Simply run `claude` after conn
 
 ### SSH Access
 
-The SSH server starts automatically when the container starts, listening on port 2211.
+The SSH server starts automatically on port 2211.
+
+**Secure Access (Recommended):**
+Set your public key in `docker-compose.yml` or environment:
+```yaml
+environment:
+  - SSH_PUBLIC_KEY="ssh-rsa AAAAB3..."
+```
 
 **Connection details:**
-- Host: localhost (or your server IP)
 - Port: 2211
 - Username: user
-- Password: pwd4user
+- Auth: Public Key (preferred) or Password (if set via OPENCODE_SERVER_PASSWORD)
 
 ```bash
 ssh -p 2211 user@localhost

@@ -29,7 +29,42 @@ pkill -f opencode || true
 rm -rf ~/.opencode/data/ ~/.opencode/cache/ 2>/dev/null
 # Disable Bun installation in oh-my-opencode
 export OHMYOPENCODE_DISABLE_BUN=1
-OPENCODE_SERVER_USERNAME=user OPENCODE_SERVER_PASSWORD=pwd4user opencode --hostname 0.0.0.0 --port 2046 web &
+
+# Generate secure password if not provided
+if [ -z "$OPENCODE_SERVER_PASSWORD" ]; then
+    OPENCODE_SERVER_PASSWORD=$(openssl rand -hex 12)
+    echo "================================================================="
+    echo "WARNING: OPENCODE_SERVER_PASSWORD not set."
+    echo "Generated temporary password: $OPENCODE_SERVER_PASSWORD"
+    echo "================================================================="
+fi
+export OPENCODE_SERVER_PASSWORD
+
+# Add SSH key if provided
+if [ -n "$SSH_PUBLIC_KEY" ]; then
+    mkdir -p ~/.ssh
+    echo "$SSH_PUBLIC_KEY" >> ~/.ssh/authorized_keys
+    chmod 700 ~/.ssh
+    chmod 600 ~/.ssh/authorized_keys
+    echo "Added SSH public key from environment."
+fi
+
+export PATH=$HOME/.opencode/bin:$HOME/.local/bin:$HOME/.bun/bin:$PATH
+
+# Check where opencode is installed
+if [ ! -f "$HOME/.opencode/bin/opencode" ]; then
+    echo "WARNING: OpenCode binary not found in standard location. Searching..."
+    FOUND_PATH=$(find $HOME -name opencode -type f -executable | head -n 1)
+    if [ -n "$FOUND_PATH" ]; then
+        echo "Found opencode at: $FOUND_PATH"
+        export PATH=$(dirname "$FOUND_PATH"):$PATH
+    else
+        echo "ERROR: Could not find opencode binary anywhere in home directory."
+        ls -R $HOME/.opencode || echo ".opencode dir not found"
+    fi
+fi
+
+OPENCODE_SERVER_USERNAME=user opencode --hostname 0.0.0.0 --port 2046 web &
 OPENCODE_PID=$!
 
 # Wait for OpenCode to initialize

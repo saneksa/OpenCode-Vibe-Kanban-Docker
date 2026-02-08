@@ -1,6 +1,6 @@
 # OpenCode + Vibe-Kanban Docker 镜像
 
-简体中文 | [English](README.md)
+简体中文 | [English](README.md) | [Русский](README.ru.md)
 
 基于 Ubuntu 24.04 LTS 的 Docker 镜像，预装了 OpenCode 和 Vibe-Kanban，以及相关的 OpenCode 插件。
 

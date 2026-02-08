@@ -10,8 +10,8 @@ ListenAddress 0.0.0.0
 AddressFamily inet
 
 # Authentication
-PermitRootLogin yes
-PasswordAuthentication yes
+PermitRootLogin no
+PasswordAuthentication no
 
 # PAM authentication (Unix, not nologin)
 UsePAM yes

@@ -1,5 +1,9 @@
 services:
   opencode:
+    build:
+      context: .
+      args:
+        TZ: ${TZ}
     image: successage/opencode-kanban
     container_name: opencode-vibe
     ports:
@@ -11,7 +15,7 @@ services:
       - ./project:/home/user/project
       - ./vibe-kanban:/var/tmp/vibe-kanban
       - ./app:/app
-      - ./userdata/.opencode:/home/user/.opencode
+      - ./userdata/.opencode:/home/user/.opencode-data
       - ./userdata/.config/opencode:/home/user/.config/opencode
       - ./userdata/.config/openspec:/home/user/.config/openspec
       - ./userdata/.config/vibe-kanban:/home/user/.local/share/vibe-kanban
@@ -24,4 +28,6 @@ services:
     tty: true
     restart: unless-stopped
     environment:
-      - TZ=Asia/Shanghai
+      - TZ=${TZ}
+      - OPENCODE_SERVER_PASSWORD=${OPENCODE_SERVER_PASSWORD}
+      - SSH_PUBLIC_KEY=${SSH_PUBLIC_KEY}
